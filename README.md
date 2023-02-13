@@ -77,3 +77,5 @@ Create a secret with auto-generated passwords:
 
 ## Deploy wordpress:
 `oc process -p PROJECT_NAMESPACE="fd34fb" -p ENV_NAME="dev" -p APP_NAME="wordpress" -f openshift/templates/wordpress/deploy-nginx-wordpress.yaml | oc apply -f -`
+
+todo: add instructions for adding the sso plugin and adding relevant themes/other plugins.
