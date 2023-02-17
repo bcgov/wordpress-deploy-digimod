@@ -118,7 +118,7 @@ objects:
                 defaultMode: 420
             - name: php-fpm-configmap-volume
               configMap:
-                name: ${APP_NAME}-php-fpm-file-config--${SITE_NAME}
+                name: ${APP_NAME}-config--${SITE_NAME}
                 items:
                   - key: app.ini
                     path: app.ini
@@ -194,18 +194,18 @@ objects:
                 - name: WORDPRESS_DB_USER
                   valueFrom:
                     configMapKeyRef:
-                      name: ${APP_NAME}-mariadb-env-config--${SITE_NAME}
+                      name: ${APP_NAME}-config--${SITE_NAME}
                       key: MYSQL_USER
                 - name: WORDPRESS_DB_NAME
                   valueFrom:
                     configMapKeyRef:
-                      name: ${APP_NAME}-mariadb-env-config--${SITE_NAME}
+                      name: ${APP_NAME}-config--${SITE_NAME}
                       key: MYSQL_DATABASE
               envFrom:
                 # There are a bunch of password-file directives in the specified configmap, and they all get loaded into the environment for wp-config-docker.php to pick up. This matters for WP-CLI.
                 - configMapRef:
                     name:
-                      ${APP_NAME}-php-fpm-env-config--${SITE_NAME}
+                      ${APP_NAME}-config--${SITE_NAME}
             - name: ${APP_NAME}-${ROLE_NAME}-wordpress-core
               image: image-registry.openshift-image-registry.svc:5000/${PROJECT_NAMESPACE}-tools/${APP_NAME}-wordpress-run:${ENV_NAME}
               imagePullPolicy: Always
@@ -244,18 +244,18 @@ objects:
                 - name: WORDPRESS_DB_USER
                   valueFrom:
                     configMapKeyRef:
-                      name: ${APP_NAME}-mariadb-env-config--${SITE_NAME}
+                      name: ${APP_NAME}-config--${SITE_NAME}
                       key: MYSQL_USER
                 - name: WORDPRESS_DB_NAME
                   valueFrom:
                     configMapKeyRef:
-                      name: ${APP_NAME}-mariadb-env-config--${SITE_NAME}
+                      name: ${APP_NAME}-config--${SITE_NAME}
                       key: MYSQL_DATABASE
               envFrom:
                 # There are a bunch of password-file directives in the specified configmap, and they all get loaded into the environment for wp-config-docker.php to pick up. This matters for WP-CLI.
                 - configMapRef:
                     name:
-                      ${APP_NAME}-php-fpm-env-config--${SITE_NAME}
+                      ${APP_NAME}-config--${SITE_NAME}
           restartPolicy: Always
           terminationGracePeriodSeconds: 30
           dnsPolicy: ClusterFirst

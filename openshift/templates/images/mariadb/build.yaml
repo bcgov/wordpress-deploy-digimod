@@ -23,7 +23,7 @@ parameters:
     displayName: "GIT Source Repo URL"
     description: "A GIT URL to your source code."
     required: true
-    value: "https://github.com/bcgov/wordpress.git"
+    value: "https://github.com/bcgov/wordpress-deploy-digimod.git"
   - name: GIT_REF
     displayName: "Git Reference"
     description: "The git reference or branch."
@@ -77,6 +77,7 @@ objects:
   - kind: BuildConfig
     apiVersion: v1
     metadata:
+      namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       name: ${APP_NAME}-${ROLE_NAME}
       labels:
         name: ${APP_NAME}-${ROLE_NAME}
