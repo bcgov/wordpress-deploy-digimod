@@ -78,4 +78,35 @@ Create a secret with auto-generated passwords:
 ## Deploy wordpress:
 `oc process -p PROJECT_NAMESPACE="fd34fb" -p ENV_NAME="dev" -p APP_NAME="wordpress" -f openshift/templates/wordpress/deploy-nginx-wordpress.yaml | oc apply -f -`
 
+## Backups
+Create cron job for database backups:
+
+`oc process -p ENV_NAME=prod -p SITE_NAME=wordpress -p POOL_NAME=wordpress-pool  -f openshift/templates/backups/cron.yaml | oc apply -f -`
+
+Create backup volume and verification volume:
+
+`oc process -p ENV_NAME=prod -p POOL_NAME=wordpress-pool -f openshift/templates/backups/volume-backup.yaml | oc apply -f -`
+
+Create 
+
+To deploy sidecar (test):
+
+`oc process -p ENV_NAME=test -p SITE_NAME=des -p POOL_NAME=pool-name -p RUN_AS_USER=1004880000 -f openshift/templates/sidecar/deploy.yaml | oc apply -f -`
+
+prod sidecar:
+
+`oc process -p ENV_NAME=prod -p SITE_NAME=wordpress -p POOL_NAME=wordpress-pool -p RUN_AS_USER=1004870000 -f openshift/templates/sidecar/deploy.yaml | oc apply -f -`
+
+Files are backed up through the use of the `netapp-file-backup`. To create a manual backup of the files (inside sidecar):
+
+`rsync -a /var/www/html/ /home/sidecar/backups/html/`
+
+Database backup runs via a chronjob daily. To create a manual backup of the database:
+
+`oc create job --from=cronjob/wordpress-mariadb-cron--des wordpress-mariadb-cron--des-manual`
+
+To restore database:
+
+`gzip -cd ~/backups/db/daily/test.sql.gz | mysql -u $WORDPRESS_DB_USER -p$(cat $MYSQL_PASSWORD_FILE) -h wordpress-mariadb $WORDPRESS_DB_NAME`
+
 todo: add instructions for adding the sso plugin and adding relevant themes/other plugins.
