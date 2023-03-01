@@ -109,4 +109,8 @@ To restore database:
 
 `gzip -cd ~/backups/db/daily/test.sql.gz | mysql -u $WORDPRESS_DB_USER -p$(cat $MYSQL_PASSWORD_FILE) -h wordpress-mariadb $WORDPRESS_DB_NAME`
 
+Example of this command on test:
+
+` gzip -cd wordpress-mariadb--des-des_test_2023-03-01_02-30-21.sql.gz | mysql -uroot -p[PASSWORD] -h wordpress-mariadb--des des_test`
+
 todo: add instructions for adding the sso plugin and adding relevant themes/other plugins.
