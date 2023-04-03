@@ -54,13 +54,13 @@ Replace "dev" with your deployment target ("test" or "prod") - this will assign 
 ## Deploy mariaDB:
 Create a secret with auto-generated passwords:
 
-`oc process -p PROJECT_NAMESPACE="fd34fb" -p ENV_NAME="dev" -p APP_NAME="wordpress" -f openshift/templates/mariadb/secrets.yaml | oc apply -f -`
+`oc process -p PROJECT_NAMESPACE="fd34fb" -p ENV_NAME="dev" -p APP_NAME="wordpress" -p SITE_NAME=dm-wp-test -f openshift/templates/mariadb/secrets.yaml | oc apply -f -`
 
 ## Create volume:
-`oc process -p PROJECT_NAMESPACE="fd34fb" -p ENV_NAME="dev" -p APP_NAME="wordpress" -f openshift/templates/mariadb/volume.yaml | oc apply -f -`
+`oc process -p PROJECT_NAMESPACE="fd34fb" -p ENV_NAME="dev" -p APP_NAME="wordpress" -p SITE_NAME=dm-wp-test -f openshift/templates/mariadb/volume.yaml | oc apply -f -`
 
 ## Deploy mariaDB and create the service:
-`oc process -p PROJECT_NAMESPACE="fd34fb" -p ENV_NAME="dev" -p APP_NAME="wordpress" -f openshift/templates/mariadb/deploy.yaml | oc apply -f -`
+`oc process -p PROJECT_NAMESPACE="fd34fb" -p ENV_NAME="dev" -p APP_NAME="wordpress" -p SITE_NAME=dm-wp-test -f openshift/templates/mariadb/deploy.yaml | oc apply -f -`
 
 ## Create wordpress config:
 
@@ -114,3 +114,9 @@ Example of this command on test:
 ` gzip -cd wordpress-mariadb--des-des_test_2023-03-01_02-30-21.sql.gz | mysql -uroot -p[PASSWORD] -h wordpress-mariadb--des des_test`
 
 todo: add instructions for adding the sso plugin and adding relevant themes/other plugins.
+
+## Load testing
+
+Create a deployment for load testing:
+
+oc process -p SITE_NAME=dm-wp-mig-test -p TEST_PATH=/policies-standards/bcs-digital-plan/ -f openshift/templates/load-test/load-test.yaml | oc apply -f -
