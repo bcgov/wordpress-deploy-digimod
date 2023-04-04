@@ -1,0 +1,79 @@
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: wordpress-load-test
+  annotations:
+    openshift.io/display-name:  Template for load-testing the deployment
+    description: Template for load-testing the deployment
+    tags: load-test,wordpress
+
+parameters:
+  - name: APP_NAME
+    displayName: "App Name"
+    description: "The name of the application (grouped)."
+    required: true
+    value: "wordpress"
+  - name: ROLE_NAME
+    displayName: "Component Name"
+    description: "The name of the application role."
+    required: true
+    value: "mariadb-cron"
+  - name: PROJECT_NAMESPACE
+    displayName: "OpenShift Project Namespace"
+    description: "The namespace of the OpenShift project containing the application."
+    required: true
+    value: "c0cce6"
+  - name: ENV_NAME
+    displayName: "Environment name"
+    description: "The name for this environment [dev, test, prod, tools]"
+    required: true
+    value: "dev"
+  - name: POOL_NAME
+    displayName: "Pool name"
+    description: "The database shared pool instance."
+    required: true
+    value: "pool"
+  - name: SITE_NAME
+    displayName: "Site name"
+    description: "The name for the site (a-zA-Z_)"
+    required: true
+    value: "global"
+  - name: TEST_PATH
+    displayName: "Test path"
+    description: "Path to test"
+    required: true
+    value: "/"
+
+objects:
+  - kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: ${APP_NAME}-load-test--${SITE_NAME}
+      namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
+      labels:
+        app: load-test
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: load-test
+      template:
+        metadata:
+          annotations:
+          labels:
+            app: load-test
+        spec:
+          containers:
+            - name: load-test
+              image: registry.access.redhat.com/rhscl/httpd-24-rhel7
+              env:
+              - name: SERVICE_HOST
+                value: "${SITE_NAME}.apps.silver.devops.gov.bc.ca"
+              - name: SERVICE_PORT
+                value: "443"
+              - name: REQUESTS
+                value: "500"
+              - name: CONCURRENCY
+                value: "60"
+              command: ["/opt/rh/httpd24/root/usr/bin/ab"]
+              args: ["-dSrk", "-c $(CONCURRENCY)", "-n $(REQUESTS)", "https://$(SERVICE_HOST):$(SERVICE_PORT)${TEST_PATH}"]
