@@ -10,12 +10,8 @@ if [ ! -z "${OC_ENV}" ] && [ ! -z "${OC_SITE_NAME}" ];  then
     if [ ! -z "${whoAmI}" ]; then
     
         printf >&2 "\nStarting Build......with user ${whoAmI}\n"
-        echo "Setting up wordpress secrets"
-        oc process -p ENV_NAME=${OC_ENV} -p SITE_NAME=${OC_SITE_NAME} -f openshift/templates/secrets/wordpress-secrets.yaml | oc apply -f -
-        # ./deployments/kustomize/secrets/secrets.sh
-        # mv secrets.txt deployments/kustomize/base/secrets.txt
-        cp -r ./deployments/kustomize/overlays/digital-${OC_ENV} ./deployments/kustomize/overlays/digital-${OC_ENV}-bak
-        echo "Applying Kustomize configuration"       
+        echo "Deleting wordpress secrets"
+        oc delete secrets -l name=${OC_SITE_NAME}-wordpress-secrets -n $NAMESPACE       echo "Applying Kustomize configuration"       
         # Inject namePrefix into kustomization.yaml
         sed -i 's/namePrefix:.*$/namePrefix: '$OC_SITE_NAME'-/' ./deployments/kustomize/overlays/digital-${OC_ENV}/kustomization.yaml
         sed -i 's/site:.*$/site: '$OC_SITE_NAME'/' ./deployments/kustomize/overlays/digital-${OC_ENV}/kustomization.yaml
@@ -26,7 +22,7 @@ if [ ! -z "${OC_ENV}" ] && [ ! -z "${OC_SITE_NAME}" ];  then
         sed -i 's/secretName: .*$/secretName: '${OC_SITE_NAME}'-wordpress-secrets/' ./deployments/kustomize/overlays/digital-${OC_ENV}/patch.yaml
         # Inject namePrefix into patch.yaml
         # sed -i.bak "s|^# *namePrefix:.*$|namePrefix: $OC_SITE_NAME-|g" ./deployments/kustomize/overlays/digital-${OC_ENV}/patch.yaml
-        oc apply -k ./deployments/kustomize/overlays/digital-${OC_ENV}
+        oc delete -k ./deployments/kustomize/overlays/digital-${OC_ENV}
         # mv -./deployments/kustomize/overlays/digital-${OC_ENV}-bak ./deployments/kustomize/overlays/digital-${OC_ENV}
 
     else
