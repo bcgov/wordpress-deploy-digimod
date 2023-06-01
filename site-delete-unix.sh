@@ -11,7 +11,7 @@ if [ ! -z "${OC_ENV}" ] && [ ! -z "${OC_SITE_NAME}" ];  then
     
         printf >&2 "\nStarting Build......with user ${whoAmI}\n"
         echo "Deleting wordpress secrets"
-        oc delete secrets -l name=${OC_SITE_NAME}-wordpress-secrets -n $NAMESPACE       echo "Applying Kustomize configuration"       
+        oc delete secrets ${OC_SITE_NAME}-wordpress-secrets -n $NAMESPACE       echo "Applying Kustomize configuration"       
         # Inject namePrefix into kustomization.yaml
         sed -i 's/namePrefix:.*$/namePrefix: '$OC_SITE_NAME'-/' ./deployments/kustomize/overlays/digital-${OC_ENV}/kustomization.yaml
         sed -i 's/site:.*$/site: '$OC_SITE_NAME'/' ./deployments/kustomize/overlays/digital-${OC_ENV}/kustomization.yaml
