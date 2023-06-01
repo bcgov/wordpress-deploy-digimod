@@ -1,0 +1,50 @@
+# digital-dev/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Points to the overlay that creates the images.
+resources:
+- github.com/bcgov/wordpress/deployments/kustomize/overlays/openshift
+# Update to your license plate in the dev|test|prod namespace.
+namespace: c0cce6-dev
+commonLabels:
+  # app.kubernetes.io/part-of: oc-site-name-wordpress
+  app: wordpress
+  site: digital-dev
+  env: dev
+images:
+  - name: wordpress-mariadb-run
+    newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-mariadb-run
+    newTag: dev
+  - name: wordpress-wordpress-run
+    newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-wordpress-run
+    newTag: dev
+  - name: wordpress-nginx-run
+    newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-nginx-run
+    newTag: dev
+  - name: wordpress-sidecar-run
+    newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-sidecar-run
+    newTag: dev
+configMapGenerator:
+- name: wordpress-config
+  behavior: merge
+  literals:
+  - APP_DOMAIN=digital-dev.apps.silver.devops.gov.bc.ca
+  - WORDPRESS_DB_HOST=digital-test-wordpress-mariadb
+# The Secrets, do not use these secrets in your deployment.
+# secretGenerator:
+# - name: wordpress-secrets
+#   type: Opaque
+#   behavior: merge
+#   literals:
+#   - MYSQL_PASSWORD=mysqlpassword
+#   - MYSQL_ROOT_PASSWORD=rootmysqlpassword
+#   - WORDPRESS_AUTH_KEY=authkey
+#   - WORDPRESS_SECURE_AUTH_KEY=secureauthkey
+#   - WORDPRESS_LOGGED_IN_KEY=loggedinkey
+#   - WORDPRESS_NONCE_KEY=noncekey
+#   - WORDPRESS_AUTH_SALT=authsalt
+#   - WORDPRESS_SECURE_AUTH_SALT=secureauthsalt
+#   - WORDPRESS_LOGGED_IN_SALT=loggedinsalt
+#   - WORDPRESS_NONCE_SALT=noncesalt
+patchesStrategicMerge:
+- patch.yaml
