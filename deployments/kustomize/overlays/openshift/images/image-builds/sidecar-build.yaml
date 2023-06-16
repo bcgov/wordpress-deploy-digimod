@@ -40,7 +40,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: wordpress-sidecar-run:dev
+      name: wordpress-sidecar-run:latest
   resources:
     limits:
       cpu: 1

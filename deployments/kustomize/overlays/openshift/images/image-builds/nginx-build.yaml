@@ -29,5 +29,5 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: wordpress-nginx-run:dev
+      name: wordpress-nginx-run:latest
 

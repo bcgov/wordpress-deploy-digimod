@@ -16,5 +16,7 @@ configMapGenerator:
   - WORDPRESS_DB_HOST=wordpress-mariadb
   - MYSQL_USER=dev_user
   - APP_DOMAIN=example.gov.bc.ca
+  files:
+  - nginx.conf
 patchesStrategicMerge:
 - patch.yaml
