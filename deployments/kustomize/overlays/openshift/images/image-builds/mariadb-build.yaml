@@ -32,4 +32,4 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: wordpress-mariadb-run:dev
+      name: wordpress-mariadb-run:latest

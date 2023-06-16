@@ -33,7 +33,7 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: wordpress-wordpress-run:dev
+      name: wordpress-wordpress-run:latest
   resources:
     limits:
       cpu: 1
