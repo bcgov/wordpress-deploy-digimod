@@ -3,15 +3,15 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 # Points to the overlay that creates the images.
 resources:
-- github.com/bcgov/wordpress/deployments/kustomize/overlays/openshift
+- ../openshift
 # Update to your license plate in the dev|test|prod namespace.
 namespace: c0cce6-prod
 commonLabels:
   # app.kubernetes.io/part-of: oc-site-name-wordpress
   app: wordpress
-  site: digital-prod
-  env: test
-namePrefix: digital-prod-
+  site: digital
+  env: prod
+namePrefix: digital-
 images:
   - name: wordpress-mariadb-run
     newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-mariadb-run
@@ -29,8 +29,8 @@ configMapGenerator:
 - name: wordpress-config
   behavior: merge
   literals:
-  - APP_DOMAIN=digital-wp.apps.silver.devops.gov.bc.ca
-  - WORDPRESS_DB_HOST=digital-prod-wordpress-mariadb
+  - APP_DOMAIN=digital.apps.silver.devops.gov.bc.ca
+  - WORDPRESS_DB_HOST=digital-wordpress-mariadb
 # The Secrets, do not use these secrets in your deployment.
 # secretGenerator:
 # - name: wordpress-secrets
