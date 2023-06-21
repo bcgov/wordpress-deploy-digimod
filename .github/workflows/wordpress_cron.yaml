@@ -1,0 +1,43 @@
+name: Check for new WordPress Docker image
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron:  '0 0 * * *' # runs every day at midnight
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Update Wordpress Image
+        run: |
+          # Define the environment variables
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+
+          # Define the Github API URL for the Dockerfile
+          DOCKERFILE_PATH='./openshift/templates/images/wordpress/docker/Dockerfile'
+
+          # Extract the current WordPress version from Dockerfile
+          current_version=$(head -n 1 DOCKERFILE_PATH | awk '{print $2}' | cut -d ':' -f 2- | cut -d '-' -f 2-)
+
+          # Get latest WordPress version from DockerHub
+          latest_version=$(curl https://hub.docker.com/v2/repositories/library/wordpress/tags | jq -r '.results[0].name')
+
+          # Compare versions and update Dockerfile if needed
+          if [[ "$current_version" != "$latest_version" ]]; then
+              # Replace the old version with the latest version
+
+              sed -i "s/$current_version/$latest_version/" DOCKERFILE_PATH
+
+              echo "current "$current_version
+              echo "latest "$latest_version
+
+              # git config --local user.email "action@github.com"
+              # git config --local user.name "GitHub Action"
+              # git add $DOCKERFILE_PATH
+              # git commit -m "Update Docker image version to $latest_version
+              # git push
+          fi
+
