@@ -24,6 +24,11 @@ jobs:
 
           # Get latest WordPress version from DockerHub
           latest_version=$(curl https://hub.docker.com/v2/repositories/library/wordpress/tags | jq -r '.results[0].name')
+          
+          # Avoid using latest tag. Get the next one.
+          if [[ ""$latest_version" != "latest" ]]; then
+            latest_version=$(curl https://hub.docker.com/v2/repositories/library/wordpress/tags | jq -r '.results[1].name')
+          fi
 
           # Compare versions and update Dockerfile if needed
           if [[ "$current_version" != "$latest_version" ]]; then
