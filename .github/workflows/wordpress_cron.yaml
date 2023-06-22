@@ -18,8 +18,9 @@ jobs:
 
           # Define the Github API URL for the Dockerfile
           pwd
-          ls ../../openshift/templates/images/wordpress/docker
-          DOCKERFILE_PATH='../../openshift/templates/images/wordpress/docker/Dockerfile'
+          ls
+          ls /openshift/templates/images/wordpress/docker
+          DOCKERFILE_PATH='/openshift/templates/images/wordpress/docker/Dockerfile'
 
           # Extract the current WordPress version from Dockerfile
           current_version=$(head -n 1 DOCKERFILE_PATH | awk '{print $2}' | cut -d ':' -f 2- | cut -d '-' -f 2-)
