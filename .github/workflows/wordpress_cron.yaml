@@ -42,7 +42,7 @@ jobs:
               git config --local user.email "action@github.com"
               git config --local user.name "GitHub Action"
               git add $DOCKERFILE_PATH
-              git commit -m "Update Docker image version to $latest_version
+              git commit -m "Update Docker image version to "$latest_version
               git push
           fi
 
