@@ -26,7 +26,7 @@ jobs:
           latest_version=$(curl https://hub.docker.com/v2/repositories/library/wordpress/tags | jq -r '.results[0].name')
           
           # Avoid using latest tag. Get the next one.
-          if [[ "$latest_version" != "latest" ]]; then
+          if [[ "$latest_version" == "latest" ]]; then
             latest_version=$(curl https://hub.docker.com/v2/repositories/library/wordpress/tags | jq -r '.results[1].name')
           fi
 
@@ -39,10 +39,10 @@ jobs:
               echo "current "$current_version
               echo "latest "$latest_version
 
-              # git config --local user.email "action@github.com"
-              # git config --local user.name "GitHub Action"
-              # git add $DOCKERFILE_PATH
-              # git commit -m "Update Docker image version to $latest_version
-              # git push
+              git config --local user.email "action@github.com"
+              git config --local user.name "GitHub Action"
+              git add $DOCKERFILE_PATH
+              git commit -m "Update Docker image version to $latest_version
+              git push
           fi
 
