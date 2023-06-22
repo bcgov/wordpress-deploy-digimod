@@ -17,13 +17,10 @@ jobs:
           GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
 
           # Define the Github API URL for the Dockerfile
-          pwd
-          ls
-          ls ./openshift/templates/images/wordpress/docker
           DOCKERFILE_PATH='./openshift/templates/images/wordpress/docker/Dockerfile'
 
           # Extract the current WordPress version from Dockerfile
-          current_version=$(head -n 1 DOCKERFILE_PATH | awk '{print $2}' | cut -d ':' -f 2- | cut -d '-' -f 2-)
+          current_version=$(head -n 1 $DOCKERFILE_PATH | awk '{print $2}' | cut -d ':' -f 2- | cut -d '-' -f 2-)
 
           # Get latest WordPress version from DockerHub
           latest_version=$(curl https://hub.docker.com/v2/repositories/library/wordpress/tags | jq -r '.results[0].name')
@@ -32,7 +29,7 @@ jobs:
           if [[ "$current_version" != "$latest_version" ]]; then
               # Replace the old version with the latest version
 
-              sed -i "s/$current_version/$latest_version/" DOCKERFILE_PATH
+              sed -i "s/$current_version/$latest_version/" $DOCKERFILE_PATH
 
               echo "current "$current_version
               echo "latest "$latest_version
