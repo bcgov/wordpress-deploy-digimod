@@ -15,7 +15,7 @@ namePrefix: digital-latest-
 images:
   - name: wordpress-mariadb-run
     newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-mariadb-run
-    newTag: latest
+    newTag: dev
   - name: wordpress-wordpress-run
     newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-wordpress-run
     newTag: latest
@@ -24,7 +24,7 @@ images:
     newTag: latest
   - name: wordpress-sidecar-run
     newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-sidecar-run
-    newTag: latest
+    newTag: dev
 configMapGenerator:
 - name: wordpress-config
   behavior: merge
