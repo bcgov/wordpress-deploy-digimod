@@ -7,10 +7,10 @@ metadata:
      haproxy.router.openshift.io/ip_whitelist: >-
       # Add all IP's to whitelist, to only allow certain IP ranges.
 spec:
-  host: digital-dev.apps.silver.devops.gov.bc.ca
+  host: digital-latest.apps.silver.devops.gov.bc.ca
   to:
     kind: Service
-    name: digital-dev-wordpress-nginx
+    name: digital-latest-wordpress-nginx
     weight: 100 
 ---
 apiVersion: apps/v1
@@ -30,14 +30,14 @@ spec:
       - name: php-fpm-secrets-volume
         secret:
           defaultMode: 420
-          secretName: digital-dev-wordpress-secrets
+          secretName: digital-latest-wordpress-secrets
       - name: mariadb-secrets-volume
         secret:
           defaultMode: 420
           items:
           - key: MYSQL_PASSWORD
             path: MYSQL_PASSWORD
-          secretName: digital-dev-wordpress-secrets
+          secretName: digital-latest-wordpress-secrets
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -60,6 +60,6 @@ spec:
             path: mysql_password
           - key: MYSQL_ROOT_PASSWORD
             path: mysql_root_password
-          secretName: digital-dev-wordpress-secrets
+          secretName: digital-latest-wordpress-secrets
 
 
