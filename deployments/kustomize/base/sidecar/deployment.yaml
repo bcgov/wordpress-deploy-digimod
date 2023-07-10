@@ -6,7 +6,7 @@ metadata:
   name: wordpress-sidecar
   namespace: default
 spec:
-  replicas: 1
+  replicas: 0
   strategy: 
     type: Recreate
   template:
