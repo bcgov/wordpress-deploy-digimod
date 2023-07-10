@@ -1,5 +1,9 @@
 name: Build Nginx Image.
 on:
+  workflow_run:
+    workflows: ["Check for new WordPress Docker image"]
+    types: 
+      - completed
   push:
     branches:
       - main
