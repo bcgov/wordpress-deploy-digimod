@@ -6,7 +6,7 @@ metadata:
 spec:
   resources:
     requests:
-      storage: 500M
+      storage: 2048M
   storageClassName: netapp-block-standard
 
 ---
