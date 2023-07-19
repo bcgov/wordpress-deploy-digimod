@@ -1,0 +1,57 @@
+name: Check for new WordPress Docker image
+
+on:
+  workflow_dispatch:
+    inputs:
+      docker_tag:
+        description: 'Image tag from Docker'
+        required: true
+        default: 'test'
+      openshift_tag:
+        description: 'Image tag in Openshift'
+        required: true
+        default: 'test'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Update Wordpress Image
+        run: |
+          # Define the environment variables
+          GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+          DOCKER_TAG=${{ github.event.inputs.docker_tag }}
+
+          # Define the Github API URL for the Dockerfile
+          DOCKERFILE_PATH='./openshift/templates/images/wordpress/docker/Dockerfile'
+          
+          # Extract the current WordPress version from Dockerfile
+          CURRENT_TAG=$(head -n 1 $DOCKERFILE_PATH | awk '{print $2}' | cut -d ':' -f 2- | cut -d '-' -f 2-)
+          # Compare versions and update Dockerfile if needed
+          if [[ "$CURRENT_TAG" != "$DOCKER_TAG" ]]; then
+
+            # Verify tag exists
+            TAG_EXISTS=$(curl https://hub.docker.com/v2/repositories/library/wordpress/tags/$DOCKER_TAG | jq -r '.name')
+            
+            # Avoid using latest tag. Get the next one.
+            if [ -n "$TAG_EXISTS" ]; then
+              sed -i "s/$CURRENT_TAG/$DOCKER_TAG/" $DOCKERFILE_PATH
+
+              echo "current "$CURRENT_TAG
+              echo "latest "$DOCKER_TAG
+
+              git config --local user.email "action@github.com"
+              git config --local user.name "GitHub Action"
+              git add $DOCKERFILE_PATH
+              git commit -m "Update Docker image version to "$DOCKER_TAG
+              git push
+            else  
+              echo "tag $DOCKER_TAG does not exist on docker."
+              exit 1
+            fi
+          else  
+            echo "the inputed tag matches the tag in the docker file."
+            exit 1
+          fi

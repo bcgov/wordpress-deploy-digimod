@@ -6,7 +6,7 @@ metadata:
 spec:
   resources:
     requests:
-      storage: 500M
+      storage: 2048M
   storageClassName: netapp-block-standard
 
 ---
@@ -20,7 +20,7 @@ spec:
   - ReadWriteMany
   resources:
     requests:
-      storage: 1Gi
+      storage: 5Gi
   storageClassName: netapp-file-standard
 
 ---
@@ -109,7 +109,7 @@ metadata:
   labels:
     app.openshift.io/runtime: sidecar
 spec:
-  replicas: 1
+  replicas: 0
   strategy:
     type: Recreate
 

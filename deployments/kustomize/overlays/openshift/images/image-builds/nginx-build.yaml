@@ -22,12 +22,12 @@ spec:
     type: Git
     git:
       ref: main
-      uri: https://github.com/bcgov/wordpress.git
+      uri: https://github.com/bcgov/wordpress-deploy-digimod.git
     contextDir: openshift/templates/images/nginx/docker
   strategy:
     type: Docker
   output:
     to:
       kind: ImageStreamTag
-      name: wordpress-nginx-run:dev
+      name: wordpress-nginx-run:latest
 

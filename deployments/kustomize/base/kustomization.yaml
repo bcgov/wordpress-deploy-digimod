@@ -34,17 +34,8 @@ configMapGenerator:
   files:
   - WORDPRESS_CONFIG_EXTRA
 # The Secrets, these values should not be used for production.
-secretGenerator:
-- name: wordpress-secrets
-  type: Opaque
-  literals:
-  - MYSQL_PASSWORD=mysqlpassword
-  - MYSQL_ROOT_PASSWORD=rootmysqlpassword
-  - WORDPRESS_AUTH_KEY=authkey
-  - WORDPRESS_SECURE_AUTH_KEY=secureauthkey
-  - WORDPRESS_LOGGED_IN_KEY=loggedinkey
-  - WORDPRESS_NONCE_KEY=noncekey
-  - WORDPRESS_AUTH_SALT=authsalt
-  - WORDPRESS_SECURE_AUTH_SALT=secureauthsalt
-  - WORDPRESS_LOGGED_IN_SALT=loggedinsalt
-  - WORDPRESS_NONCE_SALT=noncesalt
+# secretGenerator:
+# - name: wordpress-secrets
+#   type: Opaque
+#   literals:
+#   - $(cat secrets.txt | tr '\n' ' ')

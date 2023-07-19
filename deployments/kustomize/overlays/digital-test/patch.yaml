@@ -1,0 +1,65 @@
+# digital-dev/patch.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: wordpress-nginx
+  annotations:
+     haproxy.router.openshift.io/ip_whitelist: >-
+      # Add all IP's to whitelist, to only allow certain IP ranges.
+spec:
+  host: digital-test.apps.silver.devops.gov.bc.ca
+  to:
+    kind: Service
+    name: digital-test-wordpress-nginx
+    weight: 100 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: nginx
+    app.kubernetes.io/instance: webserver
+    app.kubernetes.io/part-of: wordpress
+    app.openshift.io/runtime: nginx
+  name: wordpress
+  namespace: default
+spec:
+  template:
+    spec:
+      volumes:
+      - name: php-fpm-secrets-volume
+        secret:
+          defaultMode: 420
+          secretName: digital-test-wordpress-secrets
+      - name: mariadb-secrets-volume
+        secret:
+          defaultMode: 420
+          items:
+          - key: MYSQL_PASSWORD
+            path: MYSQL_PASSWORD
+          secretName: digital-test-wordpress-secrets
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: backend
+    app.kubernetes.io/instance: coreDB
+    app.kubernetes.io/part-of: wordpress
+  name: wordpress-mariadb
+  namespace: default
+spec:
+  template:
+    spec:
+      volumes:
+      - name: db-secrets-volume
+        secret:
+          defaultMode: 420
+          items:
+          - key: MYSQL_PASSWORD
+            path: mysql_password
+          - key: MYSQL_ROOT_PASSWORD
+            path: mysql_root_password
+          secretName: digital-test-wordpress-secrets
+
+
