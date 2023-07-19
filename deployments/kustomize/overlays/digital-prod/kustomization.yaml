@@ -29,7 +29,7 @@ configMapGenerator:
 - name: wordpress-config
   behavior: merge
   literals:
-  - APP_DOMAIN=digital.apps.silver.devops.gov.bc.ca
+  - APP_DOMAIN=digital.gov.bc.ca
   - WORDPRESS_DB_HOST=digital-wordpress-mariadb
 # The Secrets, do not use these secrets in your deployment.
 # secretGenerator:
