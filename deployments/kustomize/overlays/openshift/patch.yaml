@@ -109,7 +109,7 @@ metadata:
   labels:
     app.openshift.io/runtime: sidecar
 spec:
-  replicas: 1
+  replicas: 0
   strategy:
     type: Recreate
 
