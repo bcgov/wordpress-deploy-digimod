@@ -6,7 +6,7 @@ on:
       docker_tag:
         description: 'Image tag from Docker'
         required: true
-        default: 'test'
+        default: '1.23.1-alpine'
 jobs:
   build:
     runs-on: ubuntu-latest
