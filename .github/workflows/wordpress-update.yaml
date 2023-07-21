@@ -7,7 +7,6 @@ on:
         description: 'Image tag from Docker'
         required: true
         default: '6.2.2-php8.2-fpm'
-
 jobs:
   build:
     runs-on: ubuntu-latest
