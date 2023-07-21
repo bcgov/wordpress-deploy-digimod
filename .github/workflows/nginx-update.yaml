@@ -23,7 +23,8 @@ jobs:
           DOCKERFILE_PATH='./openshift/templates/images/nginx/docker/Dockerfile'
           
           # Extract the current nginx version from Dockerfile
-          CURRENT_TAG=$(head -n 1 $DOCKERFILE_PATH | awk '{print $2}' | cut -d ':' -f 2- | cut -d '-' -f 2-)
+          # CURRENT_TAG=$(head -n 1 $DOCKERFILE_PATH | awk '{print $2}' | cut -d ':' -f 2- | cut -d '-' -f 2-)
+          CURRENT_TAG=$(grep -m1 'FROM nginx:' $DOCKERFILE_PATH | cut -d ':' -f 2)
 
           # Compare versions and update Dockerfile if needed
           if [[ "$CURRENT_TAG" != "$DOCKER_TAG" ]]; then
