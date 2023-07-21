@@ -15,16 +15,16 @@ namePrefix: digital-test-
 images:
   - name: wordpress-mariadb-run
     newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-mariadb-run
-    newTag: dev
+    newTag: test
   - name: wordpress-wordpress-run
     newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-wordpress-run
-    newTag: dev
+    newTag: test
   - name: wordpress-nginx-run
     newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-nginx-run
-    newTag: dev
+    newTag: test
   - name: wordpress-sidecar-run
     newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-sidecar-run
-    newTag: dev
+    newTag: test
 configMapGenerator:
 - name: wordpress-config
   behavior: merge

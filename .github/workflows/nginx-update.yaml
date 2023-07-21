@@ -7,11 +7,6 @@ on:
         description: 'Image tag from Docker'
         required: true
         default: 'test'
-      openshift_tag:
-        description: 'Image tag in Openshift'
-        required: true
-        default: 'test'
-
 jobs:
   build:
     runs-on: ubuntu-latest
