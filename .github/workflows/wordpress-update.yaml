@@ -6,11 +6,7 @@ on:
       docker_tag:
         description: 'Image tag from Docker'
         required: true
-        default: 'test'
-      openshift_tag:
-        description: 'Image tag in Openshift'
-        required: true
-        default: 'test'
+        default: '6.2.2-php8.2-fpm'
 
 jobs:
   build:
