@@ -6,7 +6,7 @@ on:
       docker_tag:
         description: 'Image tag from Docker'
         required: true
-        default: '6.2.2-php8.2-fpm'
+        default: '6.4.1-php8.0-fpm-alpine'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,7 +32,8 @@ jobs:
             TAG_EXISTS=$(curl https://hub.docker.com/v2/repositories/library/wordpress/tags/$DOCKER_TAG | jq -r '.name')
             
             # Avoid using latest tag. Get the next one.
-            if [ -n "$TAG_EXISTS" ]; then
+            #if [ -n "$TAG_EXISTS" ]; then
+            if [ "$TAG_EXISTS" != "null" ]; then
               sed -i "s/$CURRENT_TAG/$DOCKER_TAG/" $DOCKERFILE_PATH
 
               echo "current "$CURRENT_TAG
