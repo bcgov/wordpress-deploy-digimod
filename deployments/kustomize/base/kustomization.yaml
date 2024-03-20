@@ -3,7 +3,7 @@ kind: Kustomization
 bases:
 - mariadb
 - wordpress
-- sidecar
+#- sidecar
 # Overrides the namespace
 namespace: default
 
