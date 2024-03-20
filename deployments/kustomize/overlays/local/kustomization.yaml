@@ -16,9 +16,9 @@ images:
   - name: wordpress-nginx-run
     newName: bcgovgdx/wordpress-nginx-run
     newTag: latest
-  - name: wordpress-sidecar-run
-    newName: bcgovgdx/wordpress-sidecar-run
-    newTag: latest
+#  - name: wordpress-sidecar-run
+#    newName: bcgovgdx/wordpress-sidecar-run
+#    newTag: latest
 configMapGenerator:
 - name: wordpress-config
   behavior: merge

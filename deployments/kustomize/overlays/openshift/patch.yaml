@@ -101,16 +101,16 @@ spec:
             cpu: 100m
             memory: 100Mi
 ---
-# Patch sidecar for OS dev env.
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: wordpress-sidecar
-  labels:
-    app.openshift.io/runtime: sidecar
-spec:
-  replicas: 0
-  strategy:
-    type: Recreate
+## Patch sidecar for OS dev env.
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: wordpress-sidecar
+#  labels:
+#    app.openshift.io/runtime: sidecar
+#spec:
+#  replicas: 0
+#  strategy:
+#    type: Recreate
 
 
