@@ -22,9 +22,9 @@ images:
   - name: wordpress-nginx-run
     newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-nginx-run
     newTag: latest
-  - name: wordpress-sidecar-run
-    newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-sidecar-run
-    newTag: dev
+#  - name: wordpress-sidecar-run
+#    newName: image-registry.openshift-image-registry.svc:5000/c0cce6-tools/wordpress-sidecar-run
+#    newTag: dev
 configMapGenerator:
 - name: wordpress-config
   behavior: merge
