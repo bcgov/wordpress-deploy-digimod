@@ -4,6 +4,7 @@
 if [ ! -z "${OC_ENV}" ] && [ ! -z "${OC_SITE_NAME}" ];  then
     echo >&2 "Project:   ${OC_ENV}"
     echo >&2 "Site Name: ${OC_SITE_NAME}"
+    echo >&2 "Namespace: $NAMESPACE"
     
     whoAmI="$(oc whoami 2> /dev/null)"
     # This means i am logged in.

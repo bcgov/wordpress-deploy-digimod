@@ -4,13 +4,14 @@
 if [ ! -z "${OC_ENV}" ] && [ ! -z "${OC_SITE_NAME}" ];  then
     echo >&2 "Project:   ${OC_ENV}"
     echo >&2 "Site Name: ${OC_SITE_NAME}"
+    echo >&2 "Namespace: $NAMESPACE"
     
     whoAmI="$(oc whoami 2> /dev/null)"
     # This means i am logged in.
     if [ ! -z "${whoAmI}" ]; then
     
-        printf >&2 "\nStarting Build......with user ${whoAmI}\n"
-        echo "Deleting wordpress secrets"
+        printf >&2 "\nStarting Delete Build......with user ${whoAmI}\n"
+        echo "Deleting wordpress secrets ${OC_SITE_NAME}-wordpress-secrets"
         oc delete secrets ${OC_SITE_NAME}-wordpress-secrets -n $NAMESPACE       
         echo "Applying Kustomize configuration"       
         # Inject namePrefix into kustomization.yaml
