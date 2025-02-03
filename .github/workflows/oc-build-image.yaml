@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install oc
-        if: runner.os != 'Linux'
+        #if: runner.os != 'Linux' #ng. in ubuntu 24 action runner oc is not pre-installed, so instal it.
         uses: redhat-actions/openshift-tools-installer@v1
         with:
           oc: latest
