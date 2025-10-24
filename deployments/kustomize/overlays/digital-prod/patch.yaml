@@ -1,4 +1,4 @@
-# digital-dev/patch.yaml
+# digital-prod/patch.yaml
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:

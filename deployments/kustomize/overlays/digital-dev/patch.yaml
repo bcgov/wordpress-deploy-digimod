@@ -5,7 +5,7 @@ metadata:
   name: wordpress-nginx
   annotations:
      haproxy.router.openshift.io/ip_whitelist: >-
-      # Add all IP's to whitelist, to only allow certain IP ranges.
+      142.32.0.0/16 # Only allow BC Gov internal ips
 spec:
   host: digital-dev.apps.silver.devops.gov.bc.ca
   to:
