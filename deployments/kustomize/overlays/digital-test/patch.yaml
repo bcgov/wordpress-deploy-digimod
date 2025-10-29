@@ -5,9 +5,9 @@ metadata:
   name: wordpress-nginx
   annotations:
      haproxy.router.openshift.io/ip_whitelist: >-
-      142.32.0.0/16
+      142.32.0.0/16 142.29.0.0/16 10.0.0.0/16
      haproxy.router.openshift.io/ip_whitelist_comment: >-
-      #CIDR 142.32.0.0/16 only allow BC Gov internal ips
+      #CIDR 142... only allow BC Gov internal ips
 spec:
   host: digital-test.apps.silver.devops.gov.bc.ca
   to:
